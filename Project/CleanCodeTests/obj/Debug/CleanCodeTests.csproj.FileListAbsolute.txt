@@ -1,0 +1,8 @@
+C:\Users\Erwin\Documents\Attentia\Clean Code\Project\CleanCodeTests\obj\Debug\CleanCodeTests.csprojResolveAssemblyReference.cache
+C:\Users\Erwin\Documents\Attentia\Clean Code\Project\CleanCodeTests\bin\Debug\CleanCodeTests.dll
+C:\Users\Erwin\Documents\Attentia\Clean Code\Project\CleanCodeTests\bin\Debug\CleanCodeTests.pdb
+C:\Users\Erwin\Documents\Attentia\Clean Code\Project\CleanCodeTests\bin\Debug\CleanCode.exe
+C:\Users\Erwin\Documents\Attentia\Clean Code\Project\CleanCodeTests\bin\Debug\Moq.dll
+C:\Users\Erwin\Documents\Attentia\Clean Code\Project\CleanCodeTests\bin\Debug\CleanCode.pdb
+C:\Users\Erwin\Documents\Attentia\Clean Code\Project\CleanCodeTests\obj\Debug\CleanCodeTests.dll
+C:\Users\Erwin\Documents\Attentia\Clean Code\Project\CleanCodeTests\obj\Debug\CleanCodeTests.pdb

@@ -1,0 +1,7 @@
+C:\Users\Erwin\Documents\Attentia\Clean Code\Project\CleanCode\bin\Debug\CleanCode.exe
+C:\Users\Erwin\Documents\Attentia\Clean Code\Project\CleanCode\bin\Debug\CleanCode.pdb
+C:\Users\Erwin\Documents\Attentia\Clean Code\Project\CleanCode\obj\x86\Debug\CleanCode.Form1.resources
+C:\Users\Erwin\Documents\Attentia\Clean Code\Project\CleanCode\obj\x86\Debug\CleanCode.Properties.Resources.resources
+C:\Users\Erwin\Documents\Attentia\Clean Code\Project\CleanCode\obj\x86\Debug\CleanCode.csproj.GenerateResource.Cache
+C:\Users\Erwin\Documents\Attentia\Clean Code\Project\CleanCode\obj\x86\Debug\CleanCode.exe
+C:\Users\Erwin\Documents\Attentia\Clean Code\Project\CleanCode\obj\x86\Debug\CleanCode.pdb

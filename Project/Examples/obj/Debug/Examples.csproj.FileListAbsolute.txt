@@ -1,0 +1,4 @@
+C:\Users\Erwin\Documents\Attentia\Clean Code\Project\Examples\bin\Debug\Examples.dll
+C:\Users\Erwin\Documents\Attentia\Clean Code\Project\Examples\bin\Debug\Examples.pdb
+C:\Users\Erwin\Documents\Attentia\Clean Code\Project\Examples\obj\Debug\Examples.dll
+C:\Users\Erwin\Documents\Attentia\Clean Code\Project\Examples\obj\Debug\Examples.pdb
