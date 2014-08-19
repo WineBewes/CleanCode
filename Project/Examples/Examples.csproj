@@ -31,6 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper">
+      <HintPath>..\Libraries\AutoMapper\AutoMapper.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
@@ -48,6 +51,7 @@
     <Compile Include="CleanCode_05_UT_en_DI.cs" />
     <Compile Include="CleanCode_04_Functies.cs" />
     <Compile Include="CleanCode_06_Resultaat.cs" />
+    <Compile Include="KleinVoorbeeldjeWaaromUnitTestNuttigKanZijn.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReSharperEdges.cs" />
   </ItemGroup>
