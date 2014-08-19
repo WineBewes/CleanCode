@@ -73,8 +73,13 @@ namespace Examples
         
         private void SetDataFieldDataTypes(SQLBuilder sqlb, XSDAdapter xsda)
         {
-            if (MustSetDataFieldDataTypes(sqlb))
-            {
+			//SMELL : functie met duidelijk naam ipv. comment
+			
+			//SMELL : level of abstraction
+			
+			//only get datafield types when not sql select or sql delete            
+			if (sqlb.SQLtype != snpSQLtype.sqlSelect && sqlb.SQLtype != snpSQLtype.sqlDelete)
+			{
                 //SMELL : "fields" en "datatypes" 
                 //kunnen samengebracht worden in 1 nieuwe functie :
                 //GetFilterFieldDatatypes
@@ -86,11 +91,6 @@ namespace Examples
 
                 SetDataFieldsDataType(sqlb, datatypes);
             }            
-        }
-
-        private bool MustSetDataFieldDataTypes(SQLBuilder sqlb)
-        {
-            return sqlb.SQLtype != snpSQLtype.sqlSelect && sqlb.SQLtype != snpSQLtype.sqlDelete;
         }
 
         private static string[] GetDataFieldNames(SQLBuilder sqlb)

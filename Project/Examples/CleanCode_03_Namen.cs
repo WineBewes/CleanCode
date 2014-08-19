@@ -12,7 +12,7 @@ namespace Examples
         private string _physappath = "xyz";
         private string _xsdn = "abc";
 
-        //SMELL : return void met "Get..." !!
+        //SMELL : return void met "Get..."
         public void GetFieldDataTypes(SQLBuilder sqlb)
         {
             XSDAdapter xsda = new XSDAdapter(_physappath);
@@ -68,7 +68,7 @@ namespace Examples
         
         private void SetDataFieldDataTypes(SQLBuilder sqlb, XSDAdapter xsda)
         {
-            //SMELL : functie met duidelijk naam ipv. comment !
+            //SMELL : functie met duidelijk naam ipv. comment
 
             //only get datafield types when not sql select or sql delete            
             if (sqlb.SQLtype != snpSQLtype.sqlSelect && sqlb.SQLtype != snpSQLtype.sqlDelete)
