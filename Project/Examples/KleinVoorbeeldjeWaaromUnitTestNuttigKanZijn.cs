@@ -2,14 +2,18 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-u
 using AutoMapper;
 
 namespace Examples
 {
+	/// <summary>
+	/// Deze klasse is een mediator voor AutoMapper
+	/// </summary>
+	/// <typeparam name="TSource"></typeparam>
+	/// <typeparam name="TDestination"></typeparam>
 	abstract class KleinVoorbeeldjeWaaromUnitTestNuttigKanZijn<TSource, TDestination> : IAutoMapMediator<TSource, TDestination>
 	{
-		//ZOEK DE FOUT
+		//ZOEK DE FOUT DIE RESHARPER NIET KAN VINDEN
 
 		private static readonly ICollection<string> DerivedTypesCache = new List<string>();
 
