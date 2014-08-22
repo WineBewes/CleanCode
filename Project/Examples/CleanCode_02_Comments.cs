@@ -33,7 +33,23 @@ namespace Examples
 			}
 		}
 
-        //TODO : in een nieuwe klasse stoppen (mogelijkheid unit testing)
+		private bool IsNotGridViewAlreadyInGridNameCollection(string dgn, DataGridNameCollection thispage_dgnc)
+		{
+			bool found = false;
+
+			foreach (DataGridControl dc in thispage_dgnc)
+			{
+				if (dc.GridName == dgn)
+				{
+					found = true;
+					break;
+				}
+			}
+
+			return found;
+		}
+
+        //TODO : in een nieuwe klasse stoppen
         private DataGridControl CreateNewDataGridControl(DBSNAPGridView sdg)
         {
             DataGridControl dc = new DataGridControl();
@@ -52,117 +68,127 @@ namespace Examples
                 dc.SQLB.PageSize = -1;
             }
 
-            //setting the keyfields in the SQLB of the dc
-            string[] keyfields = sdg.PrimaryKey.Split(',');
-            foreach (string keyfield in keyfields)
-            {
-                string kf = keyfield.Trim();
-                DataField dfield = new DataField();
-                dfield.Name = kf;
-                dfield.PKField = true;
-                dc.SQLB.DataFields.Add(dfield);
-            }
+			SetKeyFields(sdg, dc);
 
-            dc.ParentControl = sdg.ParentControl;
-            dc.ParentKeyExpression = sdg.ParentKeyExpression;
+			SetParentKeyFieldsAsFilters(sdg, dc);
 
-            //setting the parentkey fields as filters
-            //getting the keys
-            if (dc.ParentKeyExpression != null && dc.ParentKeyExpression != "")
-            {
-                string[] parentkeys = sdg.ParentKeyExpression.Split(',');
+            SetDataFields(sdg, dc);
 
-                foreach (string parentkey in parentkeys)
-                {
-                    string[] keys = parentkey.Split('=');
+            SetSortFields(sdg, dc);
 
-                    FilterField ffield = new FilterField();
-                    ffield.Name = keys[1].Trim();
-                    ffield.FilterType = snpFilterType.Equal;
-                    //						ffield.Value = keys[0].Trim();
-                    ffield.ParentKey = true;
-
-                    dc.SQLB.FilterFields.Add(ffield);
-                }
-            }
-
-            //putting in the datagrid columns as datafields
-
-            DataControlFieldCollection cols = sdg.Columns;
-
-            foreach (DataControlField col in cols)
-            {
-                string dfieldname = string.Empty;
-
-                try
-                {
-                    Type t = col.GetType();
-                    dfieldname = (string)t.InvokeMember("DataField", System.Reflection.BindingFlags.GetProperty, null, col, new object[] { });
-                }
-                catch
-                { }
-
-                if (dfieldname != string.Empty || dfieldname.Trim() != string.Empty)
-                {
-
-                    DataField dfield = new DataField();
-
-                    dfield.Name = dfieldname.Trim();
-
-                    dc.SQLB.DataFields.Add(dfield);
-                }
-            }
-
-            //setting the sortfields in the SQLB of the dc
-            string[] sortfields = sdg.OrderBy.Split(',');
-
-            foreach (string sortfield in sortfields)
-            {
-                string sf = sortfield.Trim();
-                string[] sfe = sf.Split(' ');
-
-                string sfe0 = sfe[0] == null || sfe[0] == "" ? "" : sfe[0].Trim();
-
-                if (sfe0 != "")
-                {
-                    SortField sfield = new SortField();
-                    sfield.Name = sfe0;
-
-                    string sfe1 = sfe[1] == null || sfe[1] == "" ? "" : sfe[1].Trim();
-
-                    if (sfe1 != "")
-                    {
-                        sfe1 = sfe1.ToUpper();
-                        if (sfe1 == "ASC") sfield.Order = snpOrder.ASC;
-                        else sfield.Order = snpOrder.DESC;
-                    }
-
-                    dc.SQLB.SortFields.Add(sfield);
-                }
-            }
-
-            dc.GridPage = sdg.Page.ToString();
+	        dc.GridPage = sdg.Page.ToString();
             dc.OnPage = true;
 
             return dc;
         }
 
-		private bool IsNotGridViewAlreadyInGridNameCollection(string dgn, DataGridNameCollection thispage_dgnc)
+		private void SetKeyFields(DBSNAPGridView sdg, DataGridControl dc)
 		{
-			bool found = false;
-
-			foreach(DataGridControl dc in thispage_dgnc)
+			string[] keyfields = sdg.PrimaryKey.Split(',');
+			foreach (string keyfield in keyfields)
 			{
-				if(dc.GridName == dgn) 
-				{
-					found = true;
-					break;
-				}
+				string kf = keyfield.Trim();
+				DataField dfield = new DataField();
+				dfield.Name = kf;
+				dfield.PKField = true;
+				dc.SQLB.DataFields.Add(dfield);
 			}
-
-			return found;
 		}
 
+		private void SetParentKeyFieldsAsFilters(DBSNAPGridView sdg, DataGridControl dc)
+		{
+			dc.ParentControl = sdg.ParentControl;
+			dc.ParentKeyExpression = sdg.ParentKeyExpression;
+
+			string[] parentkeys = GetParentKeys(sdg, dc);
+
+			foreach (string parentkey in parentkeys)
+			{
+				string[] keys = parentkey.Split('=');
+
+				FilterField ffield = new FilterField();
+				ffield.Name = keys[1].Trim();
+				ffield.FilterType = snpFilterType.Equal;
+
+				//SMELL : zwerfvuil
+//						ffield.Value = keys[0].Trim(); 
+
+				ffield.ParentKey = true;
+
+				dc.SQLB.FilterFields.Add(ffield);
+			}
+		}
+
+		private string[] GetParentKeys(DBSNAPGridView sdg, DataGridControl dc)
+		{
+			string[] parentkeys = new string[0];
+			
+			if (dc.ParentKeyExpression != null && dc.ParentKeyExpression != "")
+			{
+				parentkeys = sdg.ParentKeyExpression.Split(',');	
+			}
+
+			return parentkeys;
+		}
+
+		private void SetDataFields(DBSNAPGridView sdg, DataGridControl dc)
+		{
+			DataControlFieldCollection cols = sdg.Columns;
+
+			foreach (DataControlField col in cols)
+			{
+				string dfieldname = string.Empty;
+
+				try
+				{
+					Type t = col.GetType();
+					dfieldname =
+						(string)t.InvokeMember("DataField", System.Reflection.BindingFlags.GetProperty, null, col, new object[] { });
+				}
+				catch
+				{
+				}
+
+				if (dfieldname != string.Empty || dfieldname.Trim() != string.Empty)
+				{
+					DataField dfield = new DataField();
+
+					dfield.Name = dfieldname.Trim();
+
+					dc.SQLB.DataFields.Add(dfield);
+				}
+			}
+		}
+
+		private void SetSortFields(DBSNAPGridView sdg, DataGridControl dc)
+		{
+			string[] sortfields = sdg.OrderBy.Split(',');
+
+			foreach (string sortfield in sortfields)
+			{
+				string sf = sortfield.Trim();
+				string[] sfe = sf.Split(' ');
+
+				string sfe0 = sfe[0] == null || sfe[0] == "" ? "" : sfe[0].Trim();
+
+				if (sfe0 != "")
+				{
+					SortField sfield = new SortField();
+					sfield.Name = sfe0;
+
+					string sfe1 = sfe[1] == null || sfe[1] == "" ? "" : sfe[1].Trim();
+
+					if (sfe1 != "")
+					{
+						sfe1 = sfe1.ToUpper();
+						if (sfe1 == "ASC") sfield.Order = snpOrder.ASC;
+						else sfield.Order = snpOrder.DESC;
+					}
+
+					dc.SQLB.SortFields.Add(sfield);
+				}
+			}
+		}
 
 		private void AddParentControl(Page Page, DataGridControl dc, DataGridNameCollection thispage_dgnc)
 		{
