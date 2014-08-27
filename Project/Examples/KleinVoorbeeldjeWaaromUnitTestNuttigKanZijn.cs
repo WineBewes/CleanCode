@@ -19,7 +19,7 @@ namespace Examples
 
 		public TDestination Map(TSource source)
 		{
-			if (MapDoesNotExist)
+			if (!DoesMapExist)
 			{
 				CreateMap();
 			}
@@ -33,7 +33,7 @@ namespace Examples
 			DerivedTypesCache.Add(ToString());
 		}
 
-		protected virtual bool MapDoesNotExist
+		protected virtual bool DoesMapExist
 		{
 			get
 			{
